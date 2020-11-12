@@ -1,0 +1,15 @@
+{
+  "name": "review-your-rent",
+  "version": "1.0.0",
+  "description": "Review private student accommodation website",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^8.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+
+  },
+  "author": "Brian Evans",
+  "license": "ISC"
+}
