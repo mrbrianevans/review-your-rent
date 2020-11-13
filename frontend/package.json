@@ -1,0 +1,24 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "the client side source code",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w"
+  },
+  "keywords": [],
+  "author": "Brian Evans",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "babel": "^6.23.0",
+    "typescript": "^4.0.5",
+    "webpack": "^5.4.0"
+  }
+}

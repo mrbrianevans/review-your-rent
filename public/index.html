@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review Your Rent</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/8.0.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/8.0.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/8.0.1/firebase-functions.js"></script>
-    <!--
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/8.0.1/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/8.0.1/firebase-database.js"></script>
+  <!--    <script defer src="/__/firebase/8.0.1/firebase-functions.js"></script>-->
+  <!--
+    initialize the SDK after all desired features are loaded, set useEmulator to false
+    to avoid connecting the SDK to running emulators.
+  -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
   </head>
   <body>
+  <div id="root"></div>
     <div id="message">
-      <h2>Welcome</h2>
+      <h2>Review Your Rent</h2>
       <h1>Firebase Hosting Setup Complete</h1>
       <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
       <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
@@ -27,13 +28,15 @@
     <p id="load">Firebase SDK Loading&hellip;</p>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      import firebase from "firebase";
+
+      document.addEventListener('DOMContentLoaded', function () {
         const loadEl = document.querySelector('#load');
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
         // // The Firebase SDK is initialized and available here!
         //
         // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        firebase.database().ref('/reviews/').on('value', snapshot => console.log);
         // firebase.firestore().doc('/foo/bar').get().then(() => { });
         // firebase.functions().httpsCallable('yourFunction')().then(() => { });
         // firebase.messaging().requestPermission().then(() => { });
@@ -58,5 +61,6 @@
         }
       });
     </script>
+  <script src="scripts.js"></script>
   </body>
 </html>
