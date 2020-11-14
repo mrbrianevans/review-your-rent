@@ -1,12 +1,13 @@
-/// <reference path="../types/IReview.ts" />
-// import * as React from "react";
+import * as React from "react";
 
 const ReviewBlock: (reviewData: IReview) => JSX.Element = (reviewData) =>
-    <div>
+    <div className={"review-block"}>
         <p>{reviewData.title}</p>
         <p>
             {reviewData.body}
         </p>
+        <span>by - {reviewData.reviewer}</span>
     </div>
 
 
+export default ReviewBlock

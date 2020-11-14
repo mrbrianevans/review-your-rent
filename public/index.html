@@ -15,25 +15,24 @@
     to avoid connecting the SDK to running emulators.
   -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
+    <link href="styling/review-block.css" rel="stylesheet" type="text/css"/>
   </head>
-  <body>
-  <div id="root"></div>
-    <div id="message">
-      <h2>Review Your Rent</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+<body>
+<div id="message">
+  <h1>Review Your Rent</h1>
+  <p>This is the beginning</p>
+</div>
+<div id="root"></div>
 
-    <script>
-      import firebase from "firebase";
+<p id="load">Firebase SDK Loading&hellip;</p>
 
-      document.addEventListener('DOMContentLoaded', function () {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
+<script>
+  // import firebase from "firebase";
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const loadEl = document.querySelector('#load');
+    // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    // // The Firebase SDK is initialized and available here!
         //
         // firebase.auth().onAuthStateChanged(user => { });
         firebase.database().ref('/reviews/').on('value', snapshot => console.log);
@@ -53,6 +52,7 @@
             'auth',
             'database',
             'functions',
+            'hosting'
           ].filter(feature => typeof app[feature] === 'function');
           loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
         } catch (e) {
