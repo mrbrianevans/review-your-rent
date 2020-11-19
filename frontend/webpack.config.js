@@ -1,8 +1,12 @@
 "use strict";
 
 const path = require("path");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  plugins: [new MiniCssExtractPlugin({
+    linkType: 'text/css'
+  })],
   // Set debugging source maps to be "inline" for
   // simplicity and ease of use
   devtool: "inline-source-map",
@@ -23,7 +27,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        loader: 'css-loader'
+        use: [MiniCssExtractPlugin.loader,'css-loader']
       },
       {
         test: /\.tsx?$/,

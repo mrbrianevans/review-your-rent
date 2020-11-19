@@ -1,12 +1,15 @@
 import * as React from "react";
 
-const ReviewBlock: (reviewData: IReview) => JSX.Element = (reviewData) =>
+const ReviewBlock: (reviewData: { review: IReview }) => JSX.Element = (props) =>
     <div className={"review-block"}>
-        <p>{reviewData.title}</p>
+        <p>{props.review.title}</p>
         <p>
-            {reviewData.body}
+            {props.review.body}
         </p>
-        <span>by - {reviewData.reviewer}</span>
+        <p>
+            by - <span className={"reviewer-name"}>{props.review.reviewer}</span>
+        </p>
+
     </div>
 
 
