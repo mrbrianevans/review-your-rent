@@ -1,0 +1,23 @@
+nav.top-nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-width: 500px;
+}
+
+nav.top-nav-bar > ul > li > a {
+    display: inline-block;
+    width: 33%;
+    text-decoration: none;
+    text-align: center;
+    background: #def8ff;
+}
+
+nav.top-nav-bar > ul > li > a:hover {
+    transition: background-color 500ms;
+    background: #bdd1d7;
+}
+
+nav.top-nav-bar > ul > li {
+    display: inline;
+}

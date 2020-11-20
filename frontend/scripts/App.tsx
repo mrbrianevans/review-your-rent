@@ -1,6 +1,6 @@
 import * as React from "react";
 import {HomePage} from "./pages/HomePage";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
 import {PropertyPage} from "./pages/property";
 import {ProfilePage} from "./pages/profile";
 
@@ -8,7 +8,7 @@ const App: () => JSX.Element = () =>
     <>
         <Router>
             <h1>Review Your Rent</h1>
-            <nav>
+            <nav className={"top-nav-bar"}>
                 <ul>
                     <li><Link to={'/'}>Home</Link></li>
                     <li><Link to={'/property'}>View property</Link></li>
