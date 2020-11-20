@@ -3,9 +3,8 @@ import firebase from "firebase/app";
 import 'firebase/database'
 import {useState} from "react";
 import ReviewBlock from "../components/ReviewBlock";
-import {firebaseConfig} from "../FirebaseConfig";
-// const firebase = require('firebase')
-// get the five most recent reviews
+import {firebaseConfig} from '../firebaseConfig'
+
 
 const initialiseFirebaseApp = () => {
     console.log("Initialising firebase app. Length: "+firebase.apps.length)
@@ -15,10 +14,9 @@ const initialiseFirebaseApp = () => {
 if(firebase.apps.length === 0)
     initialiseFirebaseApp()
 
+// get the five most recent reviews
 const getRecentReviews: () => Promise<IReview[]> = () => {
     let reviews: IReview[] = []
-    const emptyReview: IReview = {title:"", reviewer:"", address:"", date: new Date(), stars:0, body:""}
-    let tempReview: IReview
     return firebase.database().ref("/reviews/").limitToFirst(5).once('value')
           .then(allReviews=>{
               allReviews.val() && allReviews.forEach((houseReviews)=>{
