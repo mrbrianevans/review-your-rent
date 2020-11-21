@@ -31,9 +31,10 @@ export const PropertyBrowser = () => {
         getListOfHouses()
     }
     return (
-        <>
-            {listOfHouses?.map(houseId => <div><Link to={`property/${houseId}`}>View {houseId}</Link></div>)}
-            <Link to={'/property/fake-house'}>View a non-existant house link</Link>
-        </>
+        <ul className={"property-browser-list"}>
+            {listOfHouses?.map(houseId => <li><Link to={`property/${houseId}`}>View {houseId}</Link>
+            </li>)}
+            <li><Link to={'/property/fake-house'}>View a non-existant house link</Link></li>
+        </ul>
     )
 }

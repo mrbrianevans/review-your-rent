@@ -1,8 +1,8 @@
 import * as React from "react";
 import {HomePage} from "./pages/HomePage";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {PropertyPage} from "./pages/property";
-import {ProfilePage} from "./pages/profile";
+import {PropertyPage} from "./pages/PropertyPage";
+import {ProfilePage} from "./pages/ProfilePage";
 import {LinkedNavBar} from "./components/NavBar";
 import {PropertyBrowser} from "./components/PropertyBrowser";
 

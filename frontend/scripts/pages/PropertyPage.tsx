@@ -24,7 +24,7 @@ const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseRev
 export const PropertyPage: () => JSX.Element = () => {
     const [houseReviews, setHouseReviews] = useState<IReview[]>()
     const {houseId} = useParams()
-
+    const [houseDetails, setHouseDetails] = useState<IPropertyDetails>()
     const getHouseInformation = (houseId) => {
         // call the realtime database and retrieve some details about the house, including any reviews
         const connectTime = new Date()
@@ -34,6 +34,15 @@ export const PropertyPage: () => JSX.Element = () => {
                 console.log("Value received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
                 setHouseReviews(interpretHouseReviews(dataSnapshot))
             })
+        firebase.database().ref(`/houses/`).child(houseId)
+            .once('value').then(houseDetailsSnapshot => {
+            setHouseDetails({
+                area: houseDetailsSnapshot.child("area")?.val(),
+                bedrooms: houseDetailsSnapshot.child("bedrooms")?.val(),
+                "post-code": houseDetailsSnapshot.child("post-code")?.val(),
+                "street-address": houseDetailsSnapshot.child("street-address").val()
+            })
+        })
     }
 
     const [hasCalledDatabase, setCalledDatabase] = useState(false)
@@ -45,13 +54,35 @@ export const PropertyPage: () => JSX.Element = () => {
     return (
         <>
             <div>
-                <p>
-                    You are viewing a property with id={houseId}
-                </p>
+                <div className={"top-header-box"}/>
+                <h2>Property Page</h2>
+                <h2 className={"street-address-title"}>
+                    {houseDetails?.["street-address"]}
+                </h2>
                 <div>
-                    {houseReviews ? houseReviews.map(r => <ReviewBlock review={r}/>) : <p>Loading...</p>}
+                    <h3>Details</h3>
+                    <PropertyDetails property={houseDetails || {}}/>
+                </div>
+                <div>
+                    <h3>Reviews</h3>
+                    {houseReviews ? houseReviews.map(r => <ReviewBlock review={r}/>) :
+                        <p>Loading...</p>}
                 </div>
             </div>
         </>
     )
+}
+
+const PropertyDetails: (props: { property: IPropertyDetails }) => JSX.Element = (props) =>
+    <div className={"review-block"}>
+        <p><b>Area:</b> {props.property?.area}</p>
+        <p><b>Number of bedrooms:</b> {props.property?.bedrooms}</p>
+        <p><b>Post code:</b> {props.property?.["post-code"]}</p>
+    </div>
+
+interface IPropertyDetails {
+    bedrooms?: number;
+    area?: string,
+    'post-code'?: string,
+    'street-address'?: string
 }
