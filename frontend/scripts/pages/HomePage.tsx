@@ -5,7 +5,7 @@ import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
 import DataSnapshot = firebase.database.DataSnapshot;
 
-const updateRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
+const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
     let reviews: IReview[] = []
     allReviews.val() && allReviews.forEach((houseReviews) => {
         let houseAddress = houseReviews.key
@@ -28,12 +28,12 @@ export const HomePage = () => {
     const [hasCalledRecentReviews, setCalledRecentReviews] = useState(false)
     if (!hasCalledRecentReviews) {
         setCalledRecentReviews(true)
-        console.log("About to make a connection with the database...")
+        const connectTime = new Date()
+        console.log("Connecting to database")
         firebase.database().ref("/reviews/").limitToFirst(5).on('value',
             dataSnapshot => {
-                const datetime = new Date()
-                console.log("Database queried At: " + datetime.toLocaleTimeString())
-                setRecentReviews(updateRecentReviews(dataSnapshot))
+                console.log("Value received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
+                setRecentReviews(interpretRecentReviews(dataSnapshot))
             })
     }
 
@@ -52,7 +52,7 @@ export const HomePage = () => {
             </div>
             <div>
                 <h3>Recent reviews</h3>
-                {recentReviews?.map(r => <ReviewBlock review={r}/>)}
+                {recentReviews ? recentReviews.map(r => <ReviewBlock review={r}/>) : <p>Loading...</p>}
             </div>
         </>
     )

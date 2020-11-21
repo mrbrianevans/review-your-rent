@@ -5,10 +5,9 @@ import firebase from "firebase/app";
 import App from "./App";
 
 const initialiseFirebaseApp = () => {
-    const datetime = new Date()
-    console.log("Initialising firebase app. At: " + datetime.toLocaleTimeString())
+    const startIntialiseTime = new Date()
     firebase.initializeApp(firebaseConfig)
-    console.log("App initialised. At: " + datetime.toLocaleTimeString())
+    console.log("App initialised in " + (new Date().valueOf() - startIntialiseTime.valueOf()) + "ms")
 }
 
 if (firebase.apps.length === 0)

@@ -1,9 +1,10 @@
 import * as React from "react";
 import {HomePage} from "./pages/HomePage";
-import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
-import {PropertyPage} from "./pages/property";
-import {ProfilePage} from "./pages/profile";
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {PropertyPage} from "./pages/PropertyPage";
+import {ProfilePage} from "./pages/ProfilePage";
 import {LinkedNavBar} from "./components/NavBar";
+import {PropertyBrowser} from "./components/PropertyBrowser";
 
 const App: () => JSX.Element = () =>
     <>
@@ -14,9 +15,7 @@ const App: () => JSX.Element = () =>
             <Switch>
                 <Route path={"/property/:houseId"} children={<PropertyPage/>}/>
                 <Route path={"/property"}>
-                    <Link to={'/property/house-id'}>View house-id</Link>
-                    <Link to={'/property/new-house'}>View new-house</Link>
-                    <Link to={'/property/old-house'}>View old-house</Link>
+                    <PropertyBrowser/>
                 </Route>
                 <Route path={"/profile"}>
                     <ProfilePage/>
