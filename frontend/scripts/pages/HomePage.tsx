@@ -35,6 +35,11 @@ export const HomePage = () => {
                 setRecentReviews(updateRecentReviews(dataSnapshot))
             })
     }
+
+    import('./profile').then(profileModule => {
+        console.log(profileModule.ProfilePage.name)
+    })
+
     return (
         <>
             <div>

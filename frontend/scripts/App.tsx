@@ -3,18 +3,13 @@ import {HomePage} from "./pages/HomePage";
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
 import {PropertyPage} from "./pages/property";
 import {ProfilePage} from "./pages/profile";
+import {NavBar} from "./components/NavBar";
 
 const App: () => JSX.Element = () =>
     <>
         <Router>
             <h1>Review Your Rent</h1>
-            <nav className={"top-nav-bar"}>
-                <ul>
-                    <li><Link to={'/'}>Home</Link></li>
-                    <li><Link to={'/property'}>View property</Link></li>
-                    <li><Link to={'/profile'}>View profile</Link></li>
-                </ul>
-            </nav>
+            <NavBar/>
 
             <Switch>
                 <Route path={"/property/:houseId"} children={<PropertyPage/>}/>

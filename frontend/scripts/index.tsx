@@ -11,4 +11,4 @@ const initialiseFirebaseApp = () => {
 if (firebase.apps.length === 0)
     initialiseFirebaseApp()
 
-ReactDOM.render(<App/>, document.getElementById("root"))
+ReactDOM.hydrate(<App/>, document.getElementById("root"))

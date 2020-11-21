@@ -18,7 +18,7 @@ module.exports = {
   // By default the output directory is `dist`
 
   output: {
-    path: path.resolve(path.resolve(), "../public"),
+    path: path.resolve(path.resolve(), "../public/scripts"),
     filename: "scripts.js"
   },
 
