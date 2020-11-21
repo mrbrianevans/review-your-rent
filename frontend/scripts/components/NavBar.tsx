@@ -1,10 +1,11 @@
 import * as React from "react";
+import {Link} from 'react-router-dom'
 
-export const NavBar = () =>
+export const LinkedNavBar = () =>
     <nav className={"top-nav-bar"}>
         <ul>
-            <li><a href={'/'}>Home</a></li>
-            <li><a href={'/property'}>View property</a></li>
-            <li><a href={'/profile'}>View profile</a></li>
+            <li><Link to={'/'}>Home</Link></li>
+            <li><Link to={'/property'}>View property</Link></li>
+            <li><Link to={'/profile'}>View profile</Link></li>
         </ul>
     </nav>

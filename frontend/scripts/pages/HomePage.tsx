@@ -7,7 +7,6 @@ import DataSnapshot = firebase.database.DataSnapshot;
 
 const updateRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
     let reviews: IReview[] = []
-    console.log("Database queried")
     allReviews.val() && allReviews.forEach((houseReviews) => {
         let houseAddress = houseReviews.key
         houseReviews.forEach(review => {
@@ -29,16 +28,14 @@ export const HomePage = () => {
     const [hasCalledRecentReviews, setCalledRecentReviews] = useState(false)
     if (!hasCalledRecentReviews) {
         setCalledRecentReviews(true)
+        console.log("About to make a connection with the database...")
         firebase.database().ref("/reviews/").limitToFirst(5).on('value',
             dataSnapshot => {
-                console.log("Updating recent reviews due to value change")
+                const datetime = new Date()
+                console.log("Database queried At: " + datetime.toLocaleTimeString())
                 setRecentReviews(updateRecentReviews(dataSnapshot))
             })
     }
-
-    import('./profile').then(profileModule => {
-        console.log(profileModule.ProfilePage.name)
-    })
 
     return (
         <>
