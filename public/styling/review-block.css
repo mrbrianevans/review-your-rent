@@ -1,9 +1,9 @@
 div.review-block {
     border: 1px solid #646464;
-    max-width: 500px;
+    display: block;
     border-radius: 10px;
     padding: 10px;
-    margin: 10px;
+    margin: 10px 0;
     background: linear-gradient(to bottom, #def8ff, #bee5f5);
 }
 

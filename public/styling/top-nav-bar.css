@@ -1,16 +1,27 @@
 nav.top-nav-bar ul {
     list-style-type: none;
-    margin: 0;
     padding: 0;
-    max-width: 500px;
+    display: block;
 }
 
 nav.top-nav-bar > ul > li > a {
     display: inline-block;
-    width: 33%;
     text-decoration: none;
-    text-align: center;
+    width: 33%;
     background: #def8ff;
+    padding: 5px 0;
+}
+
+nav.top-nav-bar > ul > li:first-child {
+    text-align: left;
+}
+
+nav.top-nav-bar > ul > li {
+    text-align: center;
+}
+
+nav.top-nav-bar > ul > li:last-child {
+    text-align: right;
 }
 
 nav.top-nav-bar > ul > li > a:hover {

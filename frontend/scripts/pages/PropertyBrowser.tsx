@@ -3,6 +3,7 @@ import {useState} from "react";
 import {Link} from 'react-router-dom'
 import firebase from "firebase/app";
 import 'firebase/database'
+import {PageTitle} from "../components/PageTitle";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretListOfHouses: (dataSnapshot: DataSnapshot) => string[] = (dataSnapshot) => {
@@ -31,10 +32,15 @@ export const PropertyBrowser = () => {
         getListOfHouses()
     }
     return (
-        <ul className={"property-browser-list"}>
-            {listOfHouses?.map(houseId => <li><Link to={`property/${houseId}`}>View {houseId}</Link>
-            </li>)}
-            <li><Link to={'/property/fake-house'}>View a non-existant house link</Link></li>
-        </ul>
+        <div>
+            <PageTitle title={"Browse properties"}/>
+            <ul className={"property-browser-list"}>
+                {listOfHouses?.map(houseId => <li><Link
+                    to={`property/${houseId}`}>View {houseId}</Link>
+                </li>)}
+                <li><Link to={'/property/fake-house'}>View a non-existant house link</Link></li>
+            </ul>
+        </div>
+
     )
 }

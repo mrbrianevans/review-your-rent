@@ -1,0 +1,31 @@
+div.sub-title-container {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+h3.sub-title {
+    margin: 10px;
+}
+
+div.sub-title-stripe {
+    height: 30%;
+    width: 90%;
+    background-color: #62a1bf;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+    z-index: 0;
+    position: relative;
+    top: 40%;
+    left: 10%;
+}
+
+div.sub-title-label {
+    display: block;
+    background-color: #f0feff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 0 7px;
+    z-index: 1;
+    align-self: flex-start;
+}

@@ -4,6 +4,8 @@ import {useParams} from 'react-router-dom'
 import firebase from "firebase/app";
 import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
+import {PageTitle} from "../components/PageTitle";
+import {SubTitle} from "../components/SubTitle";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseReviews) => {
@@ -54,17 +56,13 @@ export const PropertyPage: () => JSX.Element = () => {
     return (
         <>
             <div>
-                <div className={"top-header-box"}/>
-                <h2>Property Page</h2>
-                <h2 className={"street-address-title"}>
-                    {houseDetails?.["street-address"]}
-                </h2>
+                <PageTitle title={houseDetails?.["street-address"]}/>
                 <div>
-                    <h3>Details</h3>
+                    <SubTitle subtitle={"Details"}/>
                     <PropertyDetails property={houseDetails || {}}/>
                 </div>
                 <div>
-                    <h3>Reviews</h3>
+                    <SubTitle subtitle={"Reviews"}/>
                     {houseReviews ? houseReviews.map(r => <ReviewBlock review={r}/>) :
                         <p>Loading...</p>}
                 </div>
