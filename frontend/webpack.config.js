@@ -10,8 +10,7 @@ module.exports = {
   mode: "production",
   // The application entry point
   entry: {
-    index: {import: "./scripts/index.tsx"},
-    other: {import: "./scripts/other.tsx"}
+    index: {import: "./scripts/index.tsx"}
   },
 
   // Where to compile the bundle
