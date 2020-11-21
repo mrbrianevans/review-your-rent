@@ -1,14 +1,17 @@
 import * as React from "react";
 import * as ReactDOM from 'react-dom';
-import App from './App'
-import firebase from "firebase/app";
 import {firebaseConfig} from "./firebaseConfig";
+import firebase from "firebase/app";
+import App from "./App";
 
 const initialiseFirebaseApp = () => {
-    console.log("Initialising firebase app. Length: " + firebase.apps.length)
+    const datetime = new Date()
+    console.log("Initialising firebase app. At: " + datetime.toLocaleTimeString())
     firebase.initializeApp(firebaseConfig)
+    console.log("App initialised. At: " + datetime.toLocaleTimeString())
 }
+
 if (firebase.apps.length === 0)
     initialiseFirebaseApp()
 
-ReactDOM.render(<App/>, document.getElementById("root"))
+ReactDOM.hydrate(<App/>, document.getElementById("root"))

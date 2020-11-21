@@ -2,12 +2,13 @@
   "name": "review-your-rent",
   "version": "1.0.0",
   "description": "Review private student accommodation website",
-  "main": "public/index.html",
+  "main": "public/static-pages/index.html",
   "dependencies": {
-    "firebase": "^8.0.1",
-    "reactstrap": "^8.7.1"
+    "firebase": "^8.0.1"
   },
   "devDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "serve": "^11.3.2",
     "ts-loader": "^8.0.11",
     "webpack": "^5.4.0",

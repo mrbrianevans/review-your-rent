@@ -14,8 +14,20 @@
     ],
     "rewrites": [
       {
+        "source": "/",
+        "destination": "/static-pages/index.html"
+      },
+      {
+        "source": "/property",
+        "destination": "/static-pages/property.html"
+      },
+      {
+        "source": "/profile",
+        "destination": "/static-pages/profile.html"
+      },
+      {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/static-pages/other.html"
       }
     ]
   }
