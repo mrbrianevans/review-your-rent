@@ -3,6 +3,8 @@ import {useState} from "react"
 import firebase from "firebase/app";
 import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
+import {PageTitle} from "../components/PageTitle";
+import {SubTitle} from "../components/SubTitle";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
@@ -39,20 +41,19 @@ export const HomePage = () => {
 
     return (
         <>
+            <PageTitle title={"Homepage"}/>
             <div>
-                <h2>Home Page</h2>
-            </div>
-            <div>
-                Search for a house in Exeter:
-                <input type={"text"} onChange={
+                <SubTitle subtitle={"Search"}/>
+                <input type={"text"} placeholder={"Street address"} inputMode={"search"} onChange={
                     (newQuery) => {
                         console.log("Now searching for property " + newQuery.target.value)
                     }
-                }/>
+                } className={"search-box"} autoFocus/>
             </div>
             <div>
-                <h3>Recent reviews</h3>
-                {recentReviews ? recentReviews.map(r => <ReviewBlock review={r}/>) : <p>Loading...</p>}
+                <SubTitle subtitle={"Recent reviews"}/>
+                {recentReviews ? recentReviews.map(r => <ReviewBlock review={r}/>) :
+                    <p>Loading...</p>}
             </div>
         </>
     )

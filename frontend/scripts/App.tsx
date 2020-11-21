@@ -4,12 +4,13 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {PropertyPage} from "./pages/PropertyPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {LinkedNavBar} from "./components/NavBar";
-import {PropertyBrowser} from "./components/PropertyBrowser";
+import {PropertyBrowser} from "./pages/PropertyBrowser";
+import {Logo} from "./components/Logo";
 
 const App: () => JSX.Element = () =>
     <>
         <Router>
-            <h1>Review Your Rent</h1>
+            <Logo/>
             <LinkedNavBar/>
 
             <Switch>

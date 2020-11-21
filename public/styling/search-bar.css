@@ -6,10 +6,14 @@
 
 }
 
-input[type=text] {
+input[type=text].search-box {
     display: block;
     width: 98%;
     max-width: available;
     border-radius: 2px;
-    padding: 4px 1%;
+    padding: 7px 1%;
+    border-width: 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: large;
+    font-family: 'Work Sans', sans-serif;
 }

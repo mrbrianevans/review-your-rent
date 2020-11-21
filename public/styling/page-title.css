@@ -1,0 +1,29 @@
+div.top-header-container {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+h2.page-title {
+}
+
+div.top-header-stripe {
+    height: 75%;
+    width: 100%;
+    background-color: #62a1bf;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+    z-index: 0;
+}
+
+div.top-header-title {
+    position: relative;
+    top: -25%;
+    display: block;
+    background-color: #f0feff;
+    align-self: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    z-index: 1;
+}
