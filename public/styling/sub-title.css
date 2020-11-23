@@ -12,7 +12,7 @@ h3.sub-title {
 div.sub-title-stripe {
     height: 30%;
     width: 90%;
-    background-color: #62a1bf;
+    background-color: #ff744d;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0);
     z-index: 0;
     position: relative;
@@ -22,7 +22,7 @@ div.sub-title-stripe {
 
 div.sub-title-label {
     display: block;
-    background-color: #f0feff;
+    background-color: #ffe8de;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 0 7px;

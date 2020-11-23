@@ -8,7 +8,7 @@ nav.top-nav-bar > ul > li > a {
     display: inline-block;
     text-decoration: none;
     width: 33%;
-    background: #def8ff;
+    background: rgb(255, 232, 222);
     padding: 5px 0;
 }
 
@@ -26,7 +26,7 @@ nav.top-nav-bar > ul > li:last-child {
 
 nav.top-nav-bar > ul > li > a:hover {
     transition: background-color 500ms;
-    background: #bdd1d7;
+    background: rgba(255, 232, 222, 0.5);
 }
 
 nav.top-nav-bar > ul > li {

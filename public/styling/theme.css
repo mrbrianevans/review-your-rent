@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@600;400&display=swap');
 
-body {
+div#root {
     font-family: 'Work Sans', sans-serif;
     max-width: 600px;
     margin: 0 1%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 h1 {

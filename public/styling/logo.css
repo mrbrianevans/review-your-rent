@@ -1,7 +1,15 @@
-h1.logo {
-    color: #090a3e;
+div.logo-container > a > h1 {
+    margin-bottom: 2px;
+    font-size: 3em;
 }
 
 div.logo-container {
+    border: solid #ff744d;
+    border-width: 0 0 0.3em 0;
+    margin-bottom: 1.5em;
+}
 
+div.logo-container > a {
+    text-decoration: none;
+    color: #000;
 }

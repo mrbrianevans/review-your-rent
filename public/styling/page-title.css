@@ -1,5 +1,5 @@
 div.top-header-container {
-    height: 150px;
+    height: 7em;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -9,18 +9,18 @@ h2.page-title {
 }
 
 div.top-header-stripe {
-    height: 75%;
+    height: 3.5em;
     width: 100%;
-    background-color: #62a1bf;
+    background-color: #ff744d;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0);
     z-index: 0;
 }
 
 div.top-header-title {
     position: relative;
-    top: -25%;
+    top: -1em;
     display: block;
-    background-color: #f0feff;
+    background-color: #ffe8de;
     align-self: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
