@@ -14,6 +14,9 @@
     ],
     // Include module source maps for debugging
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "types": [
+      "googlemaps"
+    ]
   }
 }

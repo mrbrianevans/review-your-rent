@@ -5,6 +5,7 @@ import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
+import {SearchBar} from "../components/SearchBar";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
@@ -44,11 +45,7 @@ export const HomePage = () => {
             <PageTitle title={"Homepage"}/>
             <div>
                 <SubTitle subtitle={"Search"}/>
-                <input type={"text"} placeholder={"Street address"} inputMode={"search"} onChange={
-                    (newQuery) => {
-                        console.log("Now searching for property " + newQuery.target.value)
-                    }
-                } className={"search-box"} autoFocus/>
+                <SearchBar/>
             </div>
             <div>
                 <SubTitle subtitle={"Recent reviews"}/>
