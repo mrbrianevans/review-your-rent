@@ -8,7 +8,7 @@
     "target": "es6",
     // Include typings from built-in lib declarations
     "lib": [
-      "es2015",
+      "es7",
       "dom",
       "dom.iterable"
     ],
