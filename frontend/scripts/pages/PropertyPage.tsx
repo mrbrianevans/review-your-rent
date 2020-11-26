@@ -6,6 +6,7 @@ import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
+import {IAddress} from "../types/IAddress";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseReviews) => {
@@ -26,8 +27,9 @@ const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseRev
 export const PropertyPage: () => JSX.Element = () => {
     const [houseReviews, setHouseReviews] = useState<IReview[]>()
     const {houseId} = useParams()
-    const [houseDetails, setHouseDetails] = useState<IPropertyDetails>()
+    const [houseDetails, setHouseDetails] = useState<IPropertyDetails | undefined>()
     const getHouseInformation = (houseId) => {
+        houseId = houseId.replace('.', '')
         // call the realtime database and retrieve some details about the house, including any reviews
         const connectTime = new Date()
         console.log("Connecting to database")
@@ -39,10 +41,20 @@ export const PropertyPage: () => JSX.Element = () => {
         firebase.database().ref(`/houses/`).child(houseId)
             .once('value').then(houseDetailsSnapshot => {
             setHouseDetails({
-                area: houseDetailsSnapshot.child("area")?.val(),
+                secondary_address: houseDetailsSnapshot.child("secondary_address")?.val(),
                 bedrooms: houseDetailsSnapshot.child("bedrooms")?.val(),
-                "post-code": houseDetailsSnapshot.child("post-code")?.val(),
-                "street-address": houseDetailsSnapshot.child("street-address").val()
+                terms: {
+                    street_number: houseDetailsSnapshot.child("terms").child("street_number")?.val(),
+                    street: houseDetailsSnapshot.child("terms").child("street")?.val(),
+                    town: houseDetailsSnapshot.child("terms").child("town")?.val(),
+                    post_code: houseDetailsSnapshot.child("terms").child("post_code")?.val(),
+                    county: houseDetailsSnapshot.child("terms").child("county")?.val(),
+                    region: houseDetailsSnapshot.child("terms").child("region")?.val(),
+                    country: houseDetailsSnapshot.child("terms").child("country")?.val(),
+                },
+                primary_address: houseDetailsSnapshot.child("primary_address").val(),
+                place_id: houseDetailsSnapshot.child("place_id").val(),
+                distance_from_uni: Number(houseDetailsSnapshot.child("distance_from_uni").val())
             })
         })
     }
@@ -56,14 +68,14 @@ export const PropertyPage: () => JSX.Element = () => {
     return (
         <>
             <div>
-                <PageTitle title={houseDetails?.["street-address"]}/>
+                <PageTitle title={houseDetails?.primary_address}/>
                 <div>
                     <SubTitle subtitle={"Details"}/>
-                    <PropertyDetails property={houseDetails || {}}/>
+                    <PropertyDetails property={houseDetails}/>
                 </div>
                 <div>
                     <SubTitle subtitle={"Reviews"}/>
-                    {houseReviews ? houseReviews.map(r => <ReviewBlock review={r}/>) :
+                    {houseReviews ? houseReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :
                         <p>Loading...</p>}
                 </div>
             </div>
@@ -71,16 +83,14 @@ export const PropertyPage: () => JSX.Element = () => {
     )
 }
 
-const PropertyDetails: (props: { property: IPropertyDetails }) => JSX.Element = (props) =>
+const PropertyDetails: (props: { property: IPropertyDetails | undefined }) => JSX.Element = (props) =>
     <div className={"review-block"}>
-        <p><b>Area:</b> {props.property?.area}</p>
+        <p><b>Distance from uni:</b> {props.property?.distance_from_uni}m</p>
         <p><b>Number of bedrooms:</b> {props.property?.bedrooms}</p>
-        <p><b>Post code:</b> {props.property?.["post-code"]}</p>
+        <p><b>Post code:</b> {props.property?.terms.post_code}</p>
+        <p><b>Area:</b> {props.property?.secondary_address}</p>
     </div>
 
-interface IPropertyDetails {
+interface IPropertyDetails extends IAddress {
     bedrooms?: number;
-    area?: string,
-    'post-code'?: string,
-    'street-address'?: string
 }

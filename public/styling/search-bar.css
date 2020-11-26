@@ -18,3 +18,11 @@ input[type=text].search-box {
     font-family: 'Work Sans', sans-serif;
     outline-color: #ff744d;
 }
+
+span.search-suggestion {
+    margin: 2px;
+    padding: 0 3px;
+    border-radius: 3px;
+    background-color: #ffe8de;
+    cursor: pointer;
+}
