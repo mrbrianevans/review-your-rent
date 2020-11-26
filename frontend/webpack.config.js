@@ -1,13 +1,13 @@
 "use strict";
 
 const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // Set debugging source maps to be "inline" for
   // simplicity and ease of use (makes very big files)
   devtool: "inline-source-map",
   mode: "development",
+  // mode: "production",
   // The application entry point
   entry: {
     index: {import: "./scripts/index.tsx"}
@@ -33,9 +33,7 @@ module.exports = {
   stats: 'normal',
   // File extensions to support resolving
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
-    fallback: {"util": require.resolve("util/")},
-
+    extensions: [".ts", ".tsx", ".js"]
   }
 
 };

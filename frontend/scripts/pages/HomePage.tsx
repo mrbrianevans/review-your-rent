@@ -5,7 +5,7 @@ import 'firebase/database'
 import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
-import {SearchBar} from "../components/SearchBar";
+import {SearchBar} from "../components/SearchBar/SearchBar";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
