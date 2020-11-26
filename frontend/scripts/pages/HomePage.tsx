@@ -49,7 +49,7 @@ export const HomePage = () => {
             </div>
             <div>
                 <SubTitle subtitle={"Recent reviews"}/>
-                {recentReviews ? recentReviews.map(r => <ReviewBlock review={r}/>) :
+                {recentReviews ? recentReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :
                     <p>Loading...</p>}
             </div>
         </>

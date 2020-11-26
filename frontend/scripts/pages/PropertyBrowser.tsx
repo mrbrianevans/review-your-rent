@@ -9,7 +9,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 const interpretListOfHouses: (dataSnapshot: DataSnapshot) => string[] = (dataSnapshot) => {
     let properties: string[] = []
     dataSnapshot.val() && dataSnapshot.forEach((houseReviews) => {
-        properties.push(houseReviews.child('street-address').val())
+        properties.push(houseReviews.child('primary_address').val())
     })
     return properties
 }

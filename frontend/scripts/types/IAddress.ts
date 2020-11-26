@@ -1,8 +1,15 @@
 export interface IAddress {
-    'street-address': string,
-    'secondary-address': string,
-    'place-id': string,
-    'terms': { [key: number]: string },
-    'post-code'?: string,
-    'distance-from-uni'?: number
+    place_id: string;
+    primary_address: string;
+    secondary_address: string;
+    distance_from_uni: number;
+    terms: {
+        street_number?: number;
+        street?: string;
+        town?: string;
+        post_code?: string;
+        county?: string;
+        region?: string;
+        country?: string;
+    }
 }

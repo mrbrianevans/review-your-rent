@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import {firebaseConfig} from "./firebaseConfig";
 import firebase from "firebase/app";
 import App from "./App";
-import {addAutocompleteEventListenerToSearchBox} from "./components/SearchBar/addAutocompleteEventListenerToSearchBox";
 
 const initialiseFirebaseApp = () => {
     const startIntialiseTime = new Date()
@@ -13,7 +12,5 @@ const initialiseFirebaseApp = () => {
 
 if (firebase.apps.length === 0)
     initialiseFirebaseApp()
-
-window.addAutocompleteEventListenerToSearchBox = addAutocompleteEventListenerToSearchBox
 
 ReactDOM.hydrate(<App/>, document.getElementById("root"))
