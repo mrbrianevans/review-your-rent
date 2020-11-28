@@ -26,8 +26,8 @@ export const addAddressToDatabase = (addressSuggestion: IAddressSuggestion) => {
             return;
         }
         // if status is OK
-        console.log("After being selected to be added to the database, these further details were returned: ")
-        console.log(result.address_components)
+        // console.log("After being selected to be added to the database, these further details were returned: ")
+        // console.log(result.address_components)
         // This will only happen on the addresses whose pages are viewed, not on all that are autocompleted
         result.address_components.forEach(component => {
             if (component.types.includes('postal_code') &&
@@ -54,9 +54,5 @@ export const addAddressToDatabase = (addressSuggestion: IAddressSuggestion) => {
         houseReference.set(address)
             .then(() => console.log(`Added ${addressSuggestion.address} to database:`))
             .then(() => console.log(address))
-            .then(() => window.location.href = `/property/${addressSuggestion.address}`)
-        // .then(()=>window.history.pushState({property: addressSuggestion.address}, '', `/property/${addressSuggestion.address}`))
-        // .then(()=>{routerHistory.push(`/property/${addressSuggestion.address}`)})
-        // .then(()=>{return <Redirect to={`/property/${addressSuggestion.address}`}/>})
     })
 }

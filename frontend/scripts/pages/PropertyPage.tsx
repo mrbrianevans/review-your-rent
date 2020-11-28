@@ -35,28 +35,29 @@ export const PropertyPage: () => JSX.Element = () => {
         console.log("Connecting to database")
         firebase.database().ref(`/reviews/`).child(houseId)
             .on('value', (dataSnapshot) => {
-                console.log("Value received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
+                console.log("house review received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
                 setHouseReviews(interpretHouseReviews(dataSnapshot))
             })
         firebase.database().ref(`/houses/`).child(houseId)
-            .once('value').then(houseDetailsSnapshot => {
-            setHouseDetails({
-                secondary_address: houseDetailsSnapshot.child("secondary_address")?.val(),
-                bedrooms: houseDetailsSnapshot.child("bedrooms")?.val(),
-                terms: {
-                    street_number: houseDetailsSnapshot.child("terms").child("street_number")?.val(),
-                    street: houseDetailsSnapshot.child("terms").child("street")?.val(),
-                    town: houseDetailsSnapshot.child("terms").child("town")?.val(),
-                    post_code: houseDetailsSnapshot.child("terms").child("post_code")?.val(),
-                    county: houseDetailsSnapshot.child("terms").child("county")?.val(),
-                    region: houseDetailsSnapshot.child("terms").child("region")?.val(),
+            .on('value', houseDetailsSnapshot => {
+                console.log("house details received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
+                setHouseDetails({
+                    secondary_address: houseDetailsSnapshot.child("secondary_address")?.val(),
+                    bedrooms: houseDetailsSnapshot.child("bedrooms")?.val(),
+                    terms: {
+                        street_number: houseDetailsSnapshot.child("terms").child("street_number")?.val(),
+                        street: houseDetailsSnapshot.child("terms").child("street")?.val(),
+                        town: houseDetailsSnapshot.child("terms").child("town")?.val(),
+                        post_code: houseDetailsSnapshot.child("terms").child("post_code")?.val(),
+                        county: houseDetailsSnapshot.child("terms").child("county")?.val(),
+                        region: houseDetailsSnapshot.child("terms").child("region")?.val(),
                     country: houseDetailsSnapshot.child("terms").child("country")?.val(),
                 },
                 primary_address: houseDetailsSnapshot.child("primary_address").val(),
                 place_id: houseDetailsSnapshot.child("place_id").val(),
-                distance_from_uni: Number(houseDetailsSnapshot.child("distance_from_uni").val())
+                    distance_from_uni: Number(houseDetailsSnapshot.child("distance_from_uni").val())
+                })
             })
-        })
     }
 
     const [hasCalledDatabase, setCalledDatabase] = useState(false)
@@ -64,11 +65,15 @@ export const PropertyPage: () => JSX.Element = () => {
         setCalledDatabase(true)
         getHouseInformation(houseId)
     }
-
+    // this gets the address from the URL while it waits for the database to respond
+    // this ensures that there is immediately a title when the page loads
+    // and after the database responds, the title is updated to be 100% correct
+    // most of the time the URL should be good enough, if not the exact same as the the database
+    const tempAddressTitle = decodeURI(window.location.pathname.match(/\/property\/(.*)/)[1])
     return (
         <>
             <div>
-                <PageTitle title={houseDetails?.primary_address}/>
+                <PageTitle title={houseDetails?.primary_address || tempAddressTitle}/>
                 <div>
                     <SubTitle subtitle={"Details"}/>
                     <PropertyDetails property={houseDetails}/>
