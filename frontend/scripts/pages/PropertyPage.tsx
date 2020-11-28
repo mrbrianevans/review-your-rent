@@ -7,6 +7,7 @@ import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
 import {IAddress} from "../types/IAddress";
+import {NewReview} from "../components/NewReview";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseReviews) => {
@@ -70,6 +71,7 @@ export const PropertyPage: () => JSX.Element = () => {
     // and after the database responds, the title is updated to be 100% correct
     // most of the time the URL should be good enough, if not the exact same as the the database
     const tempAddressTitle = decodeURI(window.location.pathname.match(/\/property\/(.*)/)[1])
+    const [writingNewReview, setWritingNewReview] = useState(false)
     return (
         <>
             <div>
@@ -80,6 +82,11 @@ export const PropertyPage: () => JSX.Element = () => {
                 </div>
                 <div>
                     <SubTitle subtitle={"Reviews"}/>
+                    {!writingNewReview &&
+                    <button onClick={() => setWritingNewReview(true)}>Write a review</button>}
+                    {writingNewReview && <NewReview/>}
+                    {writingNewReview &&
+                    <button onClick={() => setWritingNewReview(false)}>Cancel review</button>}
                     {houseReviews ? houseReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :
                         <p>Loading...</p>}
                 </div>
@@ -89,7 +96,7 @@ export const PropertyPage: () => JSX.Element = () => {
 }
 
 const PropertyDetails: (props: { property: IPropertyDetails | undefined }) => JSX.Element = (props) =>
-    <div className={"review-block"}>
+    <div className={"card"}>
         <p><b>Distance from uni:</b> {props.property?.distance_from_uni}m</p>
         <p><b>Number of bedrooms:</b> {props.property?.bedrooms}</p>
         <p><b>Post code:</b> {props.property?.terms.post_code}</p>

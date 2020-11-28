@@ -1,0 +1,19 @@
+input[type=text], textarea {
+    padding: 0.5em;
+    margin: 0.25em 0;
+    border: 1px solid #646464;
+    border-radius: 0.2em;
+    max-width: 100%;
+}
+
+input[type=text]:hover, textarea:focus {
+    border: 1px solid #000;
+}
+
+input[type=text]:focus, textarea:focus {
+    outline: 2px solid #ff744d;
+}
+
+div > textarea {
+    display: block;
+}

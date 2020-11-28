@@ -1,0 +1,9 @@
+div.card {
+    border: 1px solid #646464;
+    display: block;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    background: linear-gradient(to bottom, rgb(255, 232, 222), rgb(255, 232, 222));
+    max-width: 20em;
+}

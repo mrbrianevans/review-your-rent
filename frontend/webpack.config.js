@@ -5,9 +5,9 @@ const path = require("path");
 module.exports = {
   // Set debugging source maps to be "inline" for
   // simplicity and ease of use (makes very big files)
-  devtool: "inline-source-map",
-  mode: "development",
-  // mode: "production",
+  // devtool: "inline-source-map",
+  // mode: "development",
+  mode: "production",
   // The application entry point
   entry: {
     index: {import: "./scripts/index.tsx"}
