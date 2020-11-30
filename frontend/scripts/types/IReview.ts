@@ -1,8 +1,21 @@
-interface IReview {
-    address: string;
+export interface IReview {
     title: string,
-    stars: number,
     body: string,
+    date: Date,
+    rating: number,
+    estateAgent: string,
+    estateAgentRating: number,
+    bedrooms: number,
+    reviewer?: string,
+    yearOfResidence?: string, // eg 2019-2020,
+    verified: boolean
+}
+
+export interface IRecentReview {
+    address: string,
+    title: string,
     reviewer: string,
-    date: Date
+    rating: number,
+    date: Date,
+    body: string
 }

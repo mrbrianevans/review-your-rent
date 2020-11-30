@@ -2,14 +2,15 @@ import * as React from "react"
 import {useState} from "react"
 import firebase from "firebase/app";
 import 'firebase/database'
-import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
 import {SearchBar} from "../components/SearchBar/SearchBar";
+import RecentReviewBlock from "../components/RecentReviewBlock";
+import {IRecentReview} from "../types/IReview";
 import DataSnapshot = firebase.database.DataSnapshot;
 
-const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allReviews) => {
-    let reviews: IReview[] = []
+const interpretRecentReviews: (allReviews: DataSnapshot) => IRecentReview[] = (allReviews) => {
+    let reviews: IRecentReview[] = []
     allReviews.val() && allReviews.forEach((houseReviews) => {
         let houseAddress = houseReviews.key
         houseReviews.forEach(review => {
@@ -19,7 +20,7 @@ const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allRevi
                 address: houseAddress,
                 reviewer: review.child('reviewer').val() || "",
                 date: new Date(review.child('date').val()),
-                stars: review.child('stars').val() || 0
+                rating: review.child('rating').val() || 0
             })
         })
     })
@@ -27,7 +28,7 @@ const interpretRecentReviews: (allReviews: DataSnapshot) => IReview[] = (allRevi
 }
 
 export const HomePage = () => {
-    const [recentReviews, setRecentReviews] = useState<IReview[]>()
+    const [recentReviews, setRecentReviews] = useState<IRecentReview[]>()
     const [hasCalledRecentReviews, setCalledRecentReviews] = useState(false)
     if (!hasCalledRecentReviews) {
         setCalledRecentReviews(true)
@@ -49,7 +50,8 @@ export const HomePage = () => {
             </div>
             <div>
                 <SubTitle subtitle={"Recent reviews"}/>
-                {recentReviews ? recentReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :
+                {recentReviews ? recentReviews.map((r, i) => <RecentReviewBlock review={r}
+                                                                                key={i}/>) :
                     <p>Loading...</p>}
             </div>
         </>

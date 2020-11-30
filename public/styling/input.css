@@ -17,3 +17,44 @@ input[type=text]:focus, textarea:focus {
 div > textarea {
     display: block;
 }
+
+button.increment {
+    padding: 0.7em 1em;
+    height: 100%;
+    border-radius: 3px;
+    border: 1px solid #646464;
+    background-color: #f6bdac;
+}
+
+input[inputmode=numeric] {
+    width: 1em;
+    text-align: center;
+}
+
+button.selected {
+    background-color: #ff744d;
+    border: 1px solid #000;
+}
+
+button.deselected {
+    background-color: #f6bdac;
+    border: 1px solid #646464;
+}
+
+button.deselected:first-child, button.selected:first-child {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+button.deselected:last-child, button.selected:last-child {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+button.deselected, button.selected {
+    padding: 0.3em;
+}
+
+button.deselected:hover {
+    background-color: #f5ac99;
+}

@@ -8,6 +8,7 @@ import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
 import {IAddress} from "../types/IAddress";
 import {NewReview} from "../components/NewReview";
+import {IReview} from "../types/IReview";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseReviews) => {
@@ -16,10 +17,12 @@ const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseRev
         reviews.push({
             title: review.child('title').val() || "",
             body: review.child('body').val() || "",
-            address: houseReviews.key,
-            reviewer: review.child('reviewer').val() || "",
+            bedrooms: review.child('bedrooms').val() || 0,
+            estateAgent: review.child('estateAgent').val() || "",
+            estateAgentRating: review.child('estageAgentRating').val() || 0,
+            rating: review.child('rating').val() || 0,
             date: new Date(review.child('date').val()),
-            stars: review.child('stars').val() || 0
+            verified: review.child('verified').val() || false
         })
     })
     return reviews
