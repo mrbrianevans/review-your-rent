@@ -5,7 +5,7 @@ export const Logo: () => JSX.Element = () => {
     return (
         <div className={"logo-container"}>
             <Link to={'/'}>
-                <h1><LogoIcon size={75}/> Review Your Rent</h1>
+                <h1><LogoIcon size={60}/> Review Your Rent</h1>
             </Link>
         </div>
     )

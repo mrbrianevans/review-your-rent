@@ -86,8 +86,12 @@ export const PropertyPage: () => JSX.Element = () => {
                 <div>
                     <SubTitle subtitle={"Reviews"}/>
                     {!writingNewReview &&
-                    <button onClick={() => setWritingNewReview(true)}>Write a review</button>}
-                    {writingNewReview && <NewReview/>}
+                    <button onClick={() => {
+                        setWritingNewReview(true)
+                        window.location.hash = "write-new-review-button"
+                    }} id={"write-new-review-button"}>Write a review</button>}
+                    {writingNewReview &&
+                    <NewReview address={houseDetails?.primary_address || tempAddressTitle}/>}
                     {writingNewReview &&
                     <button onClick={() => setWritingNewReview(false)}>Cancel review</button>}
                     {houseReviews ? houseReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :

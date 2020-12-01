@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export const ButtonSelector = (props: { options: string[], value: string, onChange: (selectedOption: string) => void }) => {
+export const ButtonSelector = (props: { options: string[], value: string | undefined, onChange: (selectedOption: string) => void }) => {
 
     return (
         <>
