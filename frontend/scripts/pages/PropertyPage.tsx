@@ -1,5 +1,5 @@
 import * as React from "react"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useParams} from 'react-router-dom'
 import firebase from "firebase/app";
 import 'firebase/database'
@@ -32,6 +32,15 @@ export const PropertyPage: () => JSX.Element = () => {
     const [houseReviews, setHouseReviews] = useState<IReview[]>()
     const {houseId} = useParams()
     const [houseDetails, setHouseDetails] = useState<IPropertyDetails | undefined>()
+    useEffect(() => {
+        if (window.location.search.includes('verify')) {
+            // the user has got to this page by clicking a link they were emailed...
+            // attempt to get their email from local storage, if that doesn't work, prompt them
+            alert("You were sent here by email link, weren't you?")
+
+        }
+    }, [])
+
     const getHouseInformation = (houseId) => {
         houseId = houseId.replace('.', '')
         // call the realtime database and retrieve some details about the house, including any reviews

@@ -1,5 +1,5 @@
 div.text-input-wrapper {
-    padding: 0 0.35em;
+    padding: 0 0;
     margin: 0.25em 0;
     max-width: 100%;
     border: 1px solid #646464;
@@ -7,12 +7,13 @@ div.text-input-wrapper {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-input[type=text], textarea {
+div.text-input-wrapper > input[type=text], div.text-input-wrapper > textarea {
     background-color: transparent;
     border: none;
     outline: none;
-    padding: 0.7em 0;
+    padding: 0.7em 1%;
     margin: 0;
+    width: 98%;
 }
 
 div.text-input-wrapper:hover {
@@ -23,8 +24,7 @@ div.text-input-wrapper:focus-within {
     outline: 2px solid #ff744d;
 }
 
-div > textarea {
-    width: 100%;
+div.text-input-wrapper > textarea {
     resize: vertical;
 }
 

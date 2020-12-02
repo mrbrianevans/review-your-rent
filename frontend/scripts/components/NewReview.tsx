@@ -17,22 +17,22 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
     // - which estate agent?
     // - rate the estate agent
     // - how many bedrooms does this house have? how many people did you live with?
-    const [reviewTitle, setReviewTitle] = useState<string>()
+    const [reviewTitle, setReviewTitle] = useState<string>('')
     const yearOfResidenceOptions: string[] = ["2018-2019", "2019-2020", "2020-2021"]
     const [yearOfResidence, setYearOfResidence] = useState<string>()
-    const [reviewBody, setReviewBody] = useState<string>()
+    const [reviewBody, setReviewBody] = useState<string>('')
     const [houseRating, setHouseRating] = useState<number>(0)
-    const [estateAgent, setEstateAgent] = useState<string>()
+    const [estateAgent, setEstateAgent] = useState<string>('')
     const [estateAgentRating, setEstateAgentRating] = useState<number>(0)
     const [bedrooms, setBedrooms] = useState<number>(4)
 
     const [stage, setStage] = useState<'review' | 'preview' | 'signup' | 'thanks'>("review")
-    const [collectingUserDetails, setCollectingUserDetails] = useState<boolean>(false)
-    const [displayName, setDisplayName] = useState<string>()
-    const [fullName, setFullName] = useState<string>()
-    const [emailAddress, setEmailAddress] = useState<string>()
+    const [displayName, setDisplayName] = useState<string>('')
+    const [fullName, setFullName] = useState<string>(window.localStorage.getItem("fullName") || '')
+    const [emailAddress, setEmailAddress] = useState<string>(window.localStorage.getItem("emailAddress") || '')
 
     const [validationErrors, setValidationErrors] = useState<{
+        emailAddress?: string;
         estateAgentRating?: string;
         bedrooms?: string;
         houseRating?: string;
@@ -121,7 +121,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
                     <div className={"text-input-wrapper"}>
                         <input type={"text"} onChange={c => {
                             setReviewTitle(c.target.value)
-                        }} placeholder={"Great house for students"}/>
+                        }} placeholder={"Great house for students"} value={reviewTitle}/>
                     </div>
                     {validationErrors?.reviewTitle &&
                     <p className={"validation-error-message"}>{validationErrors.reviewTitle}</p>}
@@ -132,7 +132,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
                     <div className={"text-input-wrapper"}>
                 <textarea onChange={c => {
                     setReviewBody(c.target.value)
-                }} rows={10}
+                }} rows={10} value={reviewBody}
                           placeholder={`Include details about\n - the condition\n - how modern is it?\n - whats the location like?`}/>
                     </div>
                     {validationErrors?.reviewBody &&
@@ -154,7 +154,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
                     <div className={"text-input-wrapper"}>
                         <input type={"text"} onChange={c => {
                             setEstateAgent(c.target.value)
-                        }} placeholder={"Cardens"}/>
+                        }} placeholder={"Cardens"} value={estateAgent}/>
                     </div>
                     {validationErrors?.estateAgent &&
                     <p className={"validation-error-message"}>{validationErrors.estateAgent}</p>}
@@ -194,6 +194,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
             {
                 stage == "preview" &&
                 <div>
+                    <h3>Preview</h3>
                     <p>Does this look right?</p>
                     <ReviewBlock review={{
                         title: reviewTitle,
@@ -204,9 +205,20 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
                         bedrooms: bedrooms,
                         date: new Date(),
                         yearOfResidence: yearOfResidence,
+                        reviewer: displayName,
                         verified: firebase.auth().currentUser === null && firebase.auth().currentUser.emailVerified
                         // the review is verified if their email is verified
                     }}/>
+                    <div>
+                        <label>Enter a display name (first name will do): </label>
+                        <div className={"text-input-wrapper"}>
+                            <input type={"text"} value={displayName}
+                                   onChange={(c) => {
+                                       setDisplayName(c.target.value)
+                                   }}
+                                   placeholder={"Alice"}/>
+                        </div>
+                    </div>
                     <button className={"pill"} onClick={() => {
                         // by this point the user should be signed in anonymously
                         setStage("review")
@@ -225,7 +237,54 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
             {
                 stage == "signup" &&
                 <div>
-                    <p>Please enter your name and email address to confirm you are a student</p>
+                    <h3>Verify you are a student</h3>
+                    <div>
+                        <label>Full name: </label>
+                        <div className={"text-input-wrapper"}>
+                            <input type={"text"} value={fullName}
+                                   onChange={(c) => {
+                                       setFullName(c.target.value)
+                                   }}
+                                   placeholder={"Alice Smith"}/>
+                        </div>
+                    </div>
+                    <div
+                        className={"review-element " + (validationErrors.emailAddress ? "validation-error-container" : "no-validation-error-container")}>
+                        <label>Student email address: </label>
+                        <div className={"text-input-wrapper"}>
+                            <input type={"text"} value={emailAddress}
+                                   onChange={(c) => {
+                                       setEmailAddress(c.target.value)
+                                   }}
+                                   placeholder={"rar305@exeter.ac.uk"}/>
+                        </div>
+                        {validationErrors?.emailAddress &&
+                        <p className={"validation-error-message"}>{validationErrors.emailAddress}</p>}
+                    </div>
+                    <button className={"pill"} onClick={() => {
+                        // this should validate the email address
+                        if (emailAddress.match(/[a-z]{2}[0-9]{3}@exeter.ac.uk$/)) {
+                            console.log("Sending email link...")
+                            window.localStorage.setItem("emailAddress", emailAddress)
+                            window.localStorage.setItem("fullName", fullName)
+                            const actionCodeSettings: firebase.auth.ActionCodeSettings = {
+                                // the link contains the user and the house address
+                                url: `https://review-your-rent.web.app/property/${props.address}?verify=true`,
+                                handleCodeInApp: true
+                            }
+                            firebase.auth().sendSignInLinkToEmail(emailAddress, actionCodeSettings)
+                                .then(() => console.log(`Sent email to ${emailAddress}`))
+                        } else {
+                            setValidationErrors(prevState => ({
+                                ...prevState,
+                                emailAddress: "Please enter a valid student university of Exeter email address like rar305@exeter.ac.uk"
+                            }))
+                        }
+
+                    }
+                    }>Verify
+                    </button>
+                    <p>This will send a link to your university email address</p>
                 </div>
             }
             {
@@ -240,9 +299,9 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
 }
 
 
-const handleSubmission = (review: IReview, address: string) => {
+const handleSubmission: (review: IReview, address: string) => (Promise<void>) = (review, address) => {
     console.log("handle submission called")
-    const uploadToDatabase = () => {
+    const uploadToDatabase: () => Promise<void> = () => {
         console.log("Upload to database called")
         return firebase.database()
             .ref(`/reviews/${address}/${firebase.auth().currentUser.uid}`)
@@ -255,11 +314,18 @@ const handleSubmission = (review: IReview, address: string) => {
     // } else {
     //     return new Promise<void>(()=>{}).then(()=>uploadToDatabase())
     // }
-    return new Promise<void>(async () => {
-        console.log("Signing in user if necessary")
-        if (firebase.auth().currentUser === null)
-            await firebase.auth().signInAnonymously()
+    // return new Promise<void>(async () => {
+    //     console.log("Signing in user if necessary")
+    //     if (firebase.auth().currentUser === null)
+    //         await firebase.auth().signInAnonymously()
+    //     return uploadToDatabase()
+    // })
+    if (firebase.auth().currentUser === null) {
+        console.log("Logging in anonymously")
+        return firebase.auth().signInAnonymously()
+            .then(() => uploadToDatabase())
+    } else {
         return uploadToDatabase()
-    })
+    }
 }
 
