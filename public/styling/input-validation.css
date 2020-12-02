@@ -3,5 +3,6 @@ div.no-validation-error-container {
 }
 
 div.validation-error-container {
+    /*It would be great to make this flash?*/
     background-color: rgba(220, 20, 60, 0.3);
 }

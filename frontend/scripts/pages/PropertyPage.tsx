@@ -89,11 +89,12 @@ export const PropertyPage: () => JSX.Element = () => {
                     <button onClick={() => {
                         setWritingNewReview(true)
                         window.location.hash = "write-new-review-button"
-                    }} id={"write-new-review-button"}>Write a review</button>}
+                    }} id={"write-new-review-button"} className={"pill"}>Write a review</button>}
                     {writingNewReview &&
                     <NewReview address={houseDetails?.primary_address || tempAddressTitle}/>}
                     {writingNewReview &&
-                    <button onClick={() => setWritingNewReview(false)}>Cancel review</button>}
+                    <button onClick={() => setWritingNewReview(false)} className={"pill"}>Cancel
+                        review</button>}
                     {houseReviews ? houseReviews.map((r, i) => <ReviewBlock review={r} key={i}/>) :
                         <p>Loading...</p>}
                 </div>

@@ -50,7 +50,6 @@ button.deselected {
     background-color: #f6bdac;
     border: 1px solid #646464;
 }
-
 button.deselected:first-child, button.selected:first-child {
     border-bottom-left-radius: 1em;
     border-top-left-radius: 1em;
@@ -66,8 +65,16 @@ button.deselected, button.selected {
     height: 2em;
 }
 
-button.deselected:hover {
+button.deselected:hover, button.pill:hover {
     background-color: #f5ac99;
+}
+
+button.pill {
+    border-radius: 1em;
+    height: 2em;
+    background-color: #f6bdac;
+    border: 1px solid #646464;
+    padding: 0.4em;
 }
 
 p.validation-error-message {
