@@ -10,7 +10,8 @@ module.exports = {
   // mode: "production",
   // The application entry point
   entry: {
-    index: {import: "./scripts/index.tsx"}
+    index: {import: "./scripts/index.tsx"},
+    prerender: {import: "./scripts/ServerRender.ts"}
   },
 
   // Where to compile the bundle

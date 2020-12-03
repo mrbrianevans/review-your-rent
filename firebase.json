@@ -26,6 +26,10 @@
         "destination": "/static-pages/profile.html"
       },
       {
+        "source": "/render",
+        "destination": "/static-pages/render.html"
+      },
+      {
         "source": "**",
         "destination": "/static-pages/other.html"
       }
