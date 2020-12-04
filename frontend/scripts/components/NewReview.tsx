@@ -7,16 +7,9 @@ import firebase from "firebase/app";
 import 'firebase/database'
 import 'firebase/auth'
 import ReviewBlock from "./ReviewBlock";
+import {SignUp} from "./SignUp";
 
 export const NewReview: (props: { address: string }) => JSX.Element = (props) => {
-    // inputs:
-    // - review title (summary)
-    // - year lived at address (drop down or buttons?)
-    // - review of the house
-    // - rate the house
-    // - which estate agent?
-    // - rate the estate agent
-    // - how many bedrooms does this house have? how many people did you live with?
     const [reviewTitle, setReviewTitle] = useState<string>('')
     const yearOfResidenceOptions: string[] = ["2018-2019", "2019-2020", "2020-2021"]
     const [yearOfResidence, setYearOfResidence] = useState<string>()
@@ -28,8 +21,6 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
 
     const [stage, setStage] = useState<'review' | 'preview' | 'signup' | 'thanks'>("review")
     const [displayName, setDisplayName] = useState<string>('')
-    const [fullName, setFullName] = useState<string>(window.localStorage.getItem("fullName") || '')
-    const [emailAddress, setEmailAddress] = useState<string>(window.localStorage.getItem("emailAddress") || '')
 
     const [validationErrors, setValidationErrors] = useState<{
         emailAddress?: string;
@@ -90,7 +81,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
                     bedrooms: bedrooms,
                     date: new Date(),
                     yearOfResidence: yearOfResidence,
-                    verified: firebase.auth().currentUser === null && firebase.auth().currentUser.emailVerified
+                    verified: firebase.auth().currentUser !== null && firebase.auth().currentUser.emailVerified
                     // the review is verified if their email is verified
                 }, props.address)
                     // .then(secondPromise=>{secondPromise})
@@ -236,56 +227,7 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
             }
             {
                 stage == "signup" &&
-                <div>
-                    <h3>Verify you are a student</h3>
-                    <div>
-                        <label>Full name: </label>
-                        <div className={"text-input-wrapper"}>
-                            <input type={"text"} value={fullName}
-                                   onChange={(c) => {
-                                       setFullName(c.target.value)
-                                   }}
-                                   placeholder={"Alice Smith"}/>
-                        </div>
-                    </div>
-                    <div
-                        className={"review-element " + (validationErrors.emailAddress ? "validation-error-container" : "no-validation-error-container")}>
-                        <label>Student email address: </label>
-                        <div className={"text-input-wrapper"}>
-                            <input type={"text"} value={emailAddress}
-                                   onChange={(c) => {
-                                       setEmailAddress(c.target.value)
-                                   }}
-                                   placeholder={"rar305@exeter.ac.uk"}/>
-                        </div>
-                        {validationErrors?.emailAddress &&
-                        <p className={"validation-error-message"}>{validationErrors.emailAddress}</p>}
-                    </div>
-                    <button className={"pill"} onClick={() => {
-                        // this should validate the email address
-                        if (emailAddress.match(/[a-z]{2}[0-9]{3}@exeter.ac.uk$/)) {
-                            console.log("Sending email link...")
-                            window.localStorage.setItem("emailAddress", emailAddress)
-                            window.localStorage.setItem("fullName", fullName)
-                            const actionCodeSettings: firebase.auth.ActionCodeSettings = {
-                                // the link contains the user and the house address
-                                url: `https://review-your-rent.web.app/property/${props.address}?verify=true`,
-                                handleCodeInApp: true
-                            }
-                            firebase.auth().sendSignInLinkToEmail(emailAddress, actionCodeSettings)
-                                .then(() => console.log(`Sent email to ${emailAddress}`))
-                        } else {
-                            setValidationErrors(prevState => ({
-                                ...prevState,
-                                emailAddress: "Please enter a valid student university of Exeter email address like rar305@exeter.ac.uk"
-                            }))
-                        }
-
-                    }
-                    }>Verify
-                    </button>
-                    <p>This will send a link to your university email address</p>
-                </div>
+                <SignUp/>
             }
             {
                 stage == "thanks" &&
@@ -302,24 +244,15 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
 const handleSubmission: (review: IReview, address: string) => (Promise<void>) = (review, address) => {
     console.log("handle submission called")
     const uploadToDatabase: () => Promise<void> = () => {
-        console.log("Upload to database called")
+        console.log("Upload to database called with UID: " + firebase.auth().currentUser.uid)
         return firebase.database()
-            .ref(`/reviews/${address}/${firebase.auth().currentUser.uid}`)
+            .ref(`/reviews`)
+            .child(address)
+            .child(firebase.auth().currentUser.uid)
             .set({...review, date: review.date.valueOf()})
             .then(() => console.log("Review uploaded to database (show a success toast)"))
     }
-    // if (firebase.auth().currentUser === null) {
-    //     return firebase.auth().signInAnonymously()
-    //         .then(() => uploadToDatabase())
-    // } else {
-    //     return new Promise<void>(()=>{}).then(()=>uploadToDatabase())
-    // }
-    // return new Promise<void>(async () => {
-    //     console.log("Signing in user if necessary")
-    //     if (firebase.auth().currentUser === null)
-    //         await firebase.auth().signInAnonymously()
-    //     return uploadToDatabase()
-    // })
+
     if (firebase.auth().currentUser === null) {
         console.log("Logging in anonymously")
         return firebase.auth().signInAnonymously()

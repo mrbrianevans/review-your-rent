@@ -1,7 +1,7 @@
 import * as ReactDOMServer from "react-dom/server";
 import App from "./App";
 import * as React from "react";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import {firebaseConfig} from "./firebaseConfig";
 
 

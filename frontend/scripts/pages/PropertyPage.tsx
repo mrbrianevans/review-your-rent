@@ -9,6 +9,7 @@ import {SubTitle} from "../components/SubTitle";
 import {IAddress} from "../types/IAddress";
 import {NewReview} from "../components/NewReview";
 import {IReview} from "../types/IReview";
+import {VerifySignUpLink} from "../components/VerifySignUpLink";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 const interpretHouseReviews: (allReviews: DataSnapshot) => IReview[] = (houseReviews) => {
@@ -57,10 +58,10 @@ export const PropertyPage: () => JSX.Element = () => {
                         post_code: houseDetailsSnapshot.child("terms").child("post_code")?.val(),
                         county: houseDetailsSnapshot.child("terms").child("county")?.val(),
                         region: houseDetailsSnapshot.child("terms").child("region")?.val(),
-                    country: houseDetailsSnapshot.child("terms").child("country")?.val(),
-                },
-                primary_address: houseDetailsSnapshot.child("primary_address").val(),
-                place_id: houseDetailsSnapshot.child("place_id").val(),
+                        country: houseDetailsSnapshot.child("terms").child("country")?.val(),
+                    },
+                    primary_address: houseDetailsSnapshot.child("primary_address").val(),
+                    place_id: houseDetailsSnapshot.child("place_id").val(),
                     distance_from_uni: Number(houseDetailsSnapshot.child("distance_from_uni").val())
                 })
             })
@@ -77,7 +78,6 @@ export const PropertyPage: () => JSX.Element = () => {
     // most of the time the URL should be good enough, if not the exact same as the the database
     const tempAddressTitle = decodeURI(window.location.pathname.match(/\/property\/(.*)/)[1])
     const [writingNewReview, setWritingNewReview] = useState(false)
-    const [emailAddress, setEmailAddress] = useState<string>(window.localStorage.getItem("emailAddress") || "")
     return (
         <>
             <div>
@@ -88,34 +88,8 @@ export const PropertyPage: () => JSX.Element = () => {
                 </div>
                 <div>
                     <SubTitle subtitle={"Reviews"}/>
-                    {window.location.search.includes('verify') &&
-                    <div className={"card"}>
-                        <h3>Final step</h3>
-                        <div
-                            className={"review-element "}>
-                            <label>Student email address: </label>
-                            <div className={"text-input-wrapper"}>
-                                <input type={"text"} value={emailAddress}
-                                       onChange={(c) => {
-                                           setEmailAddress(c.target.value)
-                                       }}
-                                       placeholder={"rar305@exeter.ac.uk"}/>
-                            </div>
-                            <button className={"pill"} onClick={() => {
-                                // this should confirm the email address
-                                firebase.auth().signInWithEmailLink(emailAddress)
-                                    .then(r => {
-                                        console.log("Accepted verification, redirect to remove query")
-                                    })
-                                    .catch((reason => {
-                                        console.log("Rejected due to")
-                                        console.log(reason)
-                                    }))
-                            }
-                            }>Confirm
-                            </button>
-                        </div>
-                    </div>
+                    {window.location.search.match(/verify=true/i) &&
+                    <VerifySignUpLink/>
                     }
                     {!writingNewReview &&
                     <button onClick={() => {
