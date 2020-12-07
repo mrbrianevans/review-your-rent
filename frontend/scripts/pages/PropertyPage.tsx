@@ -1,8 +1,9 @@
 import * as React from "react"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useParams} from 'react-router-dom'
 import firebase from "firebase/app";
 import 'firebase/database'
+import 'firebase/analytics'
 import ReviewBlock from "../components/ReviewBlock";
 import {PageTitle} from "../components/PageTitle";
 import {SubTitle} from "../components/SubTitle";
@@ -34,6 +35,12 @@ export const PropertyPage: () => JSX.Element = () => {
     const {houseId} = useParams()
     const [houseDetails, setHouseDetails] = useState<IPropertyDetails | undefined>()
 
+    useEffect(() => {
+        firebase.analytics().logEvent('page_view', {
+            page_title: houseId,
+            page_path: window.location.pathname
+        })
+    })
 
     const getHouseInformation = (houseId) => {
         houseId = houseId.replace('.', '')
@@ -41,12 +48,13 @@ export const PropertyPage: () => JSX.Element = () => {
         const connectTime = new Date()
         console.log("Connecting to database")
         firebase.database().ref(`/reviews/`).child(houseId)
-            .on('value', (dataSnapshot) => {
+            .orderByChild('verified').equalTo(true)
+            .once('value', (dataSnapshot) => {
                 console.log("house review received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
                 setHouseReviews(interpretHouseReviews(dataSnapshot))
             })
         firebase.database().ref(`/houses/`).child(houseId)
-            .on('value', houseDetailsSnapshot => {
+            .once('value', houseDetailsSnapshot => {
                 console.log("house details received from database in " + (new Date().valueOf() - connectTime.valueOf()) + "ms")
                 setHouseDetails({
                     secondary_address: houseDetailsSnapshot.child("secondary_address")?.val(),

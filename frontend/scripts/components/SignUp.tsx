@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/auth'
+import 'firebase/analytics'
 import * as React from "react";
 import {useState} from "react";
 
@@ -13,17 +14,18 @@ export const SignUp = () => {
     return (
         <div>
             <h3>Verify you are a student</h3>
-            <div>
-                <label>Full name: </label>
-                <div className={"text-input-wrapper"}>
-                    <input type={"text"} value={fullName}
-                           onChange={(c) => {
-                               setFullName(c.target.value)
-                           }}
-                           placeholder={"Alice Smith"}/>
+            {linkSent ? <>
+                <div>
+                    <label>Full name: </label>
+                    <div className={"text-input-wrapper"}>
+                        <input type={"text"} value={fullName}
+                               onChange={(c) => {
+                                   setFullName(c.target.value)
+                               }}
+                               placeholder={"Alice Smith"}/>
+                    </div>
                 </div>
-            </div>
-            <div
+                <div
                 className={"review-element " + (validationErrors.emailAddress ? "validation-error-container" : "no-validation-error-container")}>
                 <label>Student email address: </label>
                 <div className={"text-input-wrapper"}>
@@ -43,7 +45,7 @@ export const SignUp = () => {
                     console.log("Sending email link...")
                     window.localStorage.setItem("emailAddress", emailAddress)
                     window.localStorage.setItem("fullName", fullName)
-                    firebase.database().ref("students").child(firebase.auth().currentUser.uid).set({
+                    firebase.database().ref("students").child(firebase.auth().currentUser.uid).update({
                         emailAddress: emailAddress,
                         fullName: fullName,
                         verified: false,
@@ -78,8 +80,15 @@ export const SignUp = () => {
                 }
             }
             }>Verify
-                </button>
-                <p className={"info-message"}>{linkSent?"Link sent. Check your university email":`This will send a link to ${emailAddress}`}</p>
-                </div>
+            </button>
+                <p>This will send a link to {emailAddress}</p>
+            </> : <>
+                <p className={"info-message"}>
+                    {/* Todo: This should watch database and update if they verify in another browser */}
+                    Link sent. Check your university email
+                </p>
+            </>}
+
+        </div>
                 )
                 }

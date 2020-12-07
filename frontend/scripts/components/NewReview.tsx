@@ -6,6 +6,7 @@ import {ButtonSelector} from "./ButtonSelector";
 import firebase from "firebase/app";
 import 'firebase/database'
 import 'firebase/auth'
+import 'firebase/analytics'
 import ReviewBlock from "./ReviewBlock";
 import {SignUp} from "./SignUp";
 
@@ -242,19 +243,21 @@ export const NewReview: (props: { address: string }) => JSX.Element = (props) =>
 
 
 const handleSubmission: (review: IReview, address: string) => (Promise<void>) = (review, address) => {
-    console.log("handle submission called")
     const uploadToDatabase: () => Promise<void> = () => {
-        console.log("Upload to database called with UID: " + firebase.auth().currentUser.uid)
         return firebase.database()
             .ref(`/reviews`)
             .child(address)
             .child(firebase.auth().currentUser.uid)
             .set({...review, date: review.date.valueOf()})
-            .then(() => console.log("Review uploaded to database (show a success toast)"))
+            .then(() => console.log("Review uploaded to database"))
+            .then(() => {
+                firebase.analytics().logEvent('review_upload', {})
+            })
     }
 
     if (firebase.auth().currentUser === null) {
         console.log("Logging in anonymously")
+        firebase.analytics().logEvent('login', {method: 'anonymous'})
         return firebase.auth().signInAnonymously()
             .then(() => uploadToDatabase())
     } else {

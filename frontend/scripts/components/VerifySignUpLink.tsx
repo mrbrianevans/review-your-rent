@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import 'firebase/analytics'
 import * as React from "react";
 import {useEffect, useState} from "react";
 
@@ -28,6 +29,7 @@ export const VerifySignUpLink = () => {
                     const studentDbEntry = firebase.database().ref("students").child(u.user.uid)
                     studentDbEntry.child("verified").set(true)
                     studentDbEntry.child("dateVerified").set(new Date().valueOf())
+                    firebase.analytics().logEvent('sign_up', {method: 'email_link'})
                 })
                 .catch((reason => {
                     console.log("Rejected due to")
